@@ -23,6 +23,7 @@ requirements:
     - pip
     - setuptools_scm
   run:
+    - python
     - execnet >=1.1
     - pytest >=3.0.0
     - pytest-forked

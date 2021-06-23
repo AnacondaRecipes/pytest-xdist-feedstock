@@ -15,11 +15,13 @@ build:
 
 requirements:
   host:
-    - python >=3.5
+    - python >=3.6
     - pip
     - setuptools_scm
+    - setuptools
+    - wheel
   run:
-    - python >=3.5
+    - python >=3.6
     - execnet >=1.1
     - pytest >=6.0.0
     - pytest-forked
@@ -37,6 +39,7 @@ test:
 about:
   home: https://github.com/pytest-dev/pytest-xdist
   license: MIT
+  license_family: MIT
   license_file: LICENSE
   summary: py.test xdist plugin for distributed testing and loop-on-failing modes
   dev_url: https://github.com/pytest-dev/pytest-xdist

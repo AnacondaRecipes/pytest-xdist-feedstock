@@ -43,6 +43,7 @@ about:
   license_file: LICENSE
   summary: py.test xdist plugin for distributed testing and loop-on-failing modes
   dev_url: https://github.com/pytest-dev/pytest-xdist
+  doc_url: https://pytest-xdist.readthedocs.io/en/latest/
 
 extra:
   recipe-maintainers:

@@ -1,4 +1,4 @@
-{% set version = "2.5.0" %}
+{% set version = "3.5.0" %}
 
 package:
   name: pytest-xdist
@@ -6,35 +6,41 @@ package:
 
 source:
   url: https://pypi.io/packages/source/p/pytest-xdist/pytest-xdist-{{ version }}.tar.gz
-  sha256: 4580deca3ff04ddb2ac53eba39d76cb5dd5edeac050cb6fbc768b0dd712b4edf
+  sha256: cbb36f3d67e0c478baa57fa4edc8843887e0f6cfc42d677530a36d7472b32d8a
 
 build:
   number: 0
-  noarch: python
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  skip: True # [py<38]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
-    - python >=3.6
+    - python
     - pip
     - setuptools_scm
     - setuptools
     - wheel
   run:
-    - python >=3.6
+    - python
     - execnet >=1.1
     - pytest >=6.2.0
-    - pytest-forked
   run_constrained:
     - psutil >=3.0
 
 test:
+  source_files:
+    - testing
   imports:
     - xdist
   files:
     - dummy_test.py
   commands:
     - pytest -n2 dummy_test.py
+    - pytest -vv testing
+    - pip check
+  requires:
+    - pip
+    - filelock
 
 about:
   home: https://github.com/pytest-dev/pytest-xdist
@@ -42,8 +48,11 @@ about:
   license_family: MIT
   license_file: LICENSE
   summary: py.test xdist plugin for distributed testing and loop-on-failing modes
+  description: |
+    The pytest-xdist plugin extends pytest with new test execution modes, the most used being 
+    distributing tests across multiple CPUs to speed up test execution
   dev_url: https://github.com/pytest-dev/pytest-xdist
-  doc_url: https://pytest-xdist.readthedocs.io/en/latest/
+  doc_url: https://pytest-xdist.readthedocs.io
 
 extra:
   recipe-maintainers:

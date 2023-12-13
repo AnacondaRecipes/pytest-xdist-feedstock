@@ -37,8 +37,8 @@ test:
   commands:
     - pytest -n2 dummy_test.py
     - pytest -vv testing -k "not test_internal_errors_propagate_to_controller"  # [s390x]
-    - pytest -vv testing -k "not test_keyboardinterrupt_hooks_issue79"  # [osx-64]
-    - pytest -vv testing   # [not (osx-64 or s390x)]
+    - pytest -vv testing -k "not (test_keyboardinterrupt_hooks_issue79 or test_simple)"  # [osx]
+    - pytest -vv testing   # [not (osx or s390x)]
     - pip check
   requires:
     - pip

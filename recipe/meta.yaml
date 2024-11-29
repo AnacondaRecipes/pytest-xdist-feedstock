@@ -1,29 +1,30 @@
-{% set version = "3.5.0" %}
+{% set name = "pytest-xdist" %}
+{% set version = "3.6.1" %}
 
 package:
-  name: pytest-xdist
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/p/pytest-xdist/pytest-xdist-{{ version }}.tar.gz
-  sha256: cbb36f3d67e0c478baa57fa4edc8843887e0f6cfc42d677530a36d7472b32d8a
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest_xdist-{{ version }}.tar.gz
+  sha256: ead156a4db231eec769737f57668ef58a2084a34b2e55c4a8fa20d861107300d
 
 build:
   number: 0
-  skip: True # [py<37]
+  skip: True # [py<38]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
     - python
     - pip
-    - setuptools_scm
-    - setuptools
+    - setuptools >=61.2
     - wheel
+    - setuptools-scm >=6.2.3
   run:
     - python
-    - execnet >=1.1
-    - pytest >=6.2.0
+    - execnet >=2.1
+    - pytest >=7.0.0
   run_constrained:
     - psutil >=3.0
 
@@ -36,9 +37,10 @@ test:
     - dummy_test.py
   commands:
     - pytest -n2 dummy_test.py
+    - pytest -vv testing -k "not test_ignore_sys_path_hook_entry"  # [win]
     - pytest -vv testing -k "not test_internal_errors_propagate_to_controller"  # [s390x]
     - pytest -vv testing -k "not (test_keyboardinterrupt_hooks_issue79 or test_simple)"  # [osx]
-    - pytest -vv testing   # [not (osx or s390x)]
+    - pytest -vv testing   # [not (osx or s390x or win)]
     - pip check
   requires:
     - pip

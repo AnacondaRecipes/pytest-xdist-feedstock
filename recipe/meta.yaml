@@ -50,8 +50,8 @@ about:
   license_file: LICENSE
   summary: py.test xdist plugin for distributed testing and loop-on-failing modes
   description: |
-    The pytest-xdist plugin extends pytest with new test execution modes, the most used being
-    distributing tests across multiple CPUs to speed up test execution
+    The pytest-xdist plugin extends pytest with new test execution modes, the most used
+    being distributing tests across multiple CPUs to speed up test execution
   dev_url: https://github.com/pytest-dev/pytest-xdist
   doc_url: https://pytest-xdist.readthedocs.io
 

@@ -26,7 +26,8 @@ requirements:
     # Package doesn't support pytest >=9
     # Changes are not in release yet
     # https://github.com/pytest-dev/pytest-xdist/commit/44f4bea2652e06e7cd5d4a063aa2673b5ef701ee
-    - pytest >=7.0.0,<9
+    - pytest >=7.0.0,<9  # [not (win and arm64)]
+    - pytest >=7.0.0  # [win and arm64]
   run_constrained:
     - psutil >=3.0
 
@@ -44,7 +45,7 @@ test:
   commands:
     - pip check
     - pytest -n2 dummy_test.py
-    - pytest -vv testing
+    - pytest -vv testing # [not (win and arm64)]
 
 about:
   home: https://github.com/pytest-dev/pytest-xdist

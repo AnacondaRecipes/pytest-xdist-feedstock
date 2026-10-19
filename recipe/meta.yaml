@@ -10,7 +10,7 @@ source:
   sha256: 7e578125ec9bc6050861aa93f2d59f1d8d085595d6551c2c90b6f4fad8d3a9f1
 
 build:
-  number: 1
+  number: 2
   skip: true  # [py<39]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
@@ -23,10 +23,7 @@ requirements:
   run:
     - python
     - execnet >=2.1
-    # Package doesn't support pytest >=9
-    # Changes are not in release yet
-    # https://github.com/pytest-dev/pytest-xdist/commit/44f4bea2652e06e7cd5d4a063aa2673b5ef701ee
-    - pytest >=7.0.0,<9
+    - pytest >=7.0.0
   run_constrained:
     - psutil >=3.0
 
@@ -44,7 +41,10 @@ test:
   commands:
     - pip check
     - pytest -n2 dummy_test.py
-    - pytest -vv testing
+    # deselect tests that fail with pytest>=9, and that are fixed on the main branch.
+    # https://github.com/pytest-dev/pytest-xdist/commit/44f4bea2652e06e7cd5d4a063aa2673b5ef701ee
+    # https://github.com/pytest-dev/pytest-xdist/commit/0c984478f39d7a01aa24c061f2581bdfd071cb6a
+    - pytest -vv testing --deselect testing/test_newhooks.py::TestCrashItem::test_handlecrashitem_one -k "not test_remote_usage_prog"
 
 about:
   home: https://github.com/pytest-dev/pytest-xdist

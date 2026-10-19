@@ -41,8 +41,10 @@ test:
   commands:
     - pip check
     - pytest -n2 dummy_test.py
+    # deselect tests that fail with pytest>=9, and that are fixed on the main branch.
     # https://github.com/pytest-dev/pytest-xdist/commit/44f4bea2652e06e7cd5d4a063aa2673b5ef701ee
-    - pytest -vv testing -k "not test_remote_usage_prog"
+    # https://github.com/pytest-dev/pytest-xdist/commit/0c984478f39d7a01aa24c061f2581bdfd071cb6a
+    - pytest -vv testing --deselect testing/test_newhooks.py::TestCrashItem::test_handlecrashitem_one -k "not test_remote_usage_prog"
 
 about:
   home: https://github.com/pytest-dev/pytest-xdist
